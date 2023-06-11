@@ -5,14 +5,14 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "ts-node src/index.ts"
+        "start": "tsx src/index.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "@types/node": "^20.3.0",
-        "ts-node": "^10.9.1",
+        "tsx": "^3.12.7",
         "typescript": "^5.1.3"
     }
 }
