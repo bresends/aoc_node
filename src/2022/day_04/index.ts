@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { start } from 'repl';
 
 function convertToRange(inputText: string) {
     // Format: 31-31,32-40 - '()' to capture groups, '\d' for a digit '+' for a sequence of 1+ digits, and the other caracters to match the Format.
