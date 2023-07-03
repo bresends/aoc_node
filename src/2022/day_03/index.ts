@@ -1,5 +1,19 @@
-import fs from 'fs';
-import path from 'path';
+import { readTextFile } from '../../utils/readFile';
+
+export function puzzle1(input: string) {
+    return input
+        .split('\n')
+        .map(findRepeatedItem)
+        .map(calculateLetterScore)
+        .reduce((total, cur) => total + cur, 0);
+}
+
+export function puzzle2(input: string) {
+    return createGroups(input.split('\n'))
+        .map(findBadge)
+        .map(calculateLetterScore)
+        .reduce((total, cur) => total + cur, 0);
+}
 
 function findRepeatedItem(rucksack: string) {
     const firstCompartment = rucksack
@@ -40,37 +54,10 @@ function findBadge([sack1, sack2, sack3]: Array<string>) {
     return badge;
 }
 
-function puzzle1() {
-    fs.readFile(
-        path.resolve(__dirname, './rucksacks.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const totalPriorities = data
-                .split('\n')
-                .map(findRepeatedItem)
-                .map(calculateLetterScore)
-                .reduce((acc, cur) => acc + cur, 0);
-            console.log(totalPriorities);
-        }
-    );
-}
+const input = readTextFile({
+    folder: '2022/day_03',
+    name: 'rucksacks',
+});
 
-function puzzle2() {
-    fs.readFile(
-        path.resolve(__dirname, './rucksacks.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const rucksacks = data.split('\n');
-            const groups = createGroups(rucksacks);
-            const totalPriorities = groups
-                .map(findBadge)
-                .map(calculateLetterScore)
-                .reduce((acc, cur) => acc + cur, 0);
-            console.log(totalPriorities);
-        }
-    );
-}
-
-puzzle2();
+console.log(puzzle1(input));
+console.log(puzzle2(input));
