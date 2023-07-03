@@ -1,5 +1,12 @@
-import fs from 'fs';
-import path from 'path';
+import { readTextFile } from '../../utils/readFile';
+
+export function puzzle1(input: string) {
+    return convertToRange(input).filter(totalOverlapCheck).length;
+}
+
+export function puzzle2(input: string) {
+    return convertToRange(input).filter(partialOverlapCheck).length;
+}
 
 function convertToRange(inputText: string) {
     // Format: 31-31,32-40 - '()' to capture groups, '\d' for a digit '+' for a sequence of 1+ digits, and the other caracters to match the Format.
@@ -33,31 +40,10 @@ function partialOverlapCheck([
     return sec1Start <= sec2End && sec2Start <= sec1End;
 }
 
-function puzzle1() {
-    fs.readFile(
-        path.resolve(__dirname, './pairs.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const totalOverlaps =
-                convertToRange(data).filter(totalOverlapCheck).length;
+const input = readTextFile({
+    folder: '2022/day_04',
+    name: 'pairs',
+});
 
-            console.log(totalOverlaps);
-        }
-    );
-}
-
-function puzzle2() {
-    fs.readFile(
-        path.resolve(__dirname, './pairs.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const totalOverlaps =
-                convertToRange(data).filter(partialOverlapCheck).length;
-            console.log(totalOverlaps);
-        }
-    );
-}
-
-puzzle2();
+console.log(puzzle1(input));
+console.log(puzzle2(input));
