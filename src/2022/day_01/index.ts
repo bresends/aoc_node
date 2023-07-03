@@ -1,36 +1,30 @@
-import fs from 'fs';
-import path from 'path';
+import { readTextFile } from '../../utils/readFile';
+
+export function puzzle1(input: string) {
+    const elfCalories = input
+        .split('\n\n')
+        .map(getSumOfGroup)
+        .reduce((max, cur) => (cur > max ? cur : max));
+    return elfCalories;
+}
+
+export function puzzle2(input: string) {
+    const elfCalories = input
+        .split('\n\n')
+        .map(getSumOfGroup)
+        .sort((a, b) => b - a)
+        .slice(0, 3)
+        .reduce((acc, crr) => acc + crr, 0);
+    return elfCalories;
+}
 
 const getSumOfGroup = (group: string) =>
     group.split('\n').reduce((acc, cur) => acc + Number(cur), 0);
 
-function puzzle1() {
-    fs.readFile(
-        path.resolve(__dirname, './calories.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const elfCalories = data.split('\n\n').map(getSumOfGroup);
-            const highestCalories = Math.max(...elfCalories);
-            console.log(highestCalories);
-        }
-    );
-}
+const input = readTextFile({
+    folder: '2022/day_01',
+    name: 'calories',
+});
 
-function puzzle2() {
-    fs.readFile(
-        path.resolve(__dirname, './calories.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const elfCalories = data.split('\n\n').map(getSumOfGroup);
-            const topCalories = [...elfCalories].sort((a, b) => b - a);
-            const totalTopCalories = topCalories
-                .slice(0, 3)
-                .reduce((acc, crr) => acc + crr, 0);
-            console.log(totalTopCalories);
-        }
-    );
-}
-
-puzzle2();
+console.log(puzzle1(input));
+console.log(puzzle2(input));
