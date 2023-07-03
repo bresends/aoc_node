@@ -1,21 +1,19 @@
 import { readTextFile } from '../../utils/readFile';
 
 export function puzzle1(input: string) {
-    const elfCalories = input
+    return input
         .split('\n\n')
         .map(getSumOfGroup)
         .reduce((max, cur) => (cur > max ? cur : max));
-    return elfCalories;
 }
 
 export function puzzle2(input: string) {
-    const elfCalories = input
+    return input
         .split('\n\n')
         .map(getSumOfGroup)
         .sort((a, b) => b - a)
         .slice(0, 3)
         .reduce((acc, crr) => acc + crr, 0);
-    return elfCalories;
 }
 
 const getSumOfGroup = (group: string) =>
