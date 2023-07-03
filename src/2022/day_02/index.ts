@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import { readTextFile } from '../../utils/readFile';
 
 /*
 First Challenge 
@@ -14,6 +13,20 @@ X Rock
 Y Paper
 C Scissors
 */
+
+export function puzzle1(input: string) {
+    return input
+        .split('\n')
+        .map(calculateMatchScore1)
+        .reduce((total, cur) => total + cur, 0);
+}
+
+export function puzzle2(input: string) {
+    return input
+        .split('\n')
+        .map(calculateMatchScore2)
+        .reduce((total, cur) => total + cur, 0);
+}
 
 function calculateMatchScore1(match: string) {
     const [opponentMove, myMove] = match.split(' ');
@@ -78,32 +91,10 @@ function calculateMatchScore2(match: string) {
     return myMoveScore + gameScore;
 }
 
-function puzzle1() {
-    fs.readFile(
-        path.resolve(__dirname, './strategy.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const matches = data.split('\n');
-            const matchScore = matches.map(calculateMatchScore1);
-            const totalScore = matchScore.reduce((acc, cur) => acc + cur, 0);
-            console.log(totalScore);
-        }
-    );
-}
+const input = readTextFile({
+    folder: '2022/day_02',
+    name: 'strategy',
+});
 
-function puzzle2() {
-    fs.readFile(
-        path.resolve(__dirname, './strategy.txt'),
-        'utf-8',
-        (err, data) => {
-            if (err) throw new Error('Could not read the file');
-            const matches = data.split('\n');
-            const matchScore = matches.map(calculateMatchScore2);
-            const totalScore = matchScore.reduce((acc, cur) => acc + cur, 0);
-            console.log(totalScore);
-        }
-    );
-}
-
-puzzle2();
+console.log(puzzle1(input));
+console.log(puzzle2(input));
